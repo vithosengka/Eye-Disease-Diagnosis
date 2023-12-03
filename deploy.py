@@ -24,7 +24,7 @@ gejala_terpilih = st.multiselect('Pilih Gejala yang Dialami', list_gejala)
 
 st.write('Gejala yang Dipilih:', ', '.join(gejala_terpilih))
 
-# Logika aturan forward chaining
+# Fungsi untuk Logika aturan forward chaining
 def diagnosis_mata(gejala_terpilih):
     hasil_diagnosis = []
     
@@ -34,9 +34,11 @@ def diagnosis_mata(gejala_terpilih):
 
     return hasil_diagnosis
 
-hasil_diagnosis_mata = diagnosis_mata(gejala_terpilih)
-st.subheader('Hasil Diagnosis:')
-if hasil_diagnosis_mata:
-    st.write('Penyakit mata yang mungkin: ', ', '.join(hasil_diagnosis_mata))
-else:
-    st.write('Tidak dapat mendiagnosis penyakit mata.')
+# Tombol "Diagnosa"
+if st.button('Diagnosa'):
+    hasil_diagnosis_mata = diagnosis_mata(gejala_terpilih)
+    st.subheader('Hasil Diagnosis:')
+    if hasil_diagnosis_mata:
+        st.write('Penyakit mata yang mungkin: ', ', '.join(hasil_diagnosis_mata))
+    else:
+        st.write('Tidak dapat mendiagnosis penyakit mata.')
