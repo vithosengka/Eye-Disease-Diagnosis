@@ -1,43 +1,34 @@
 import streamlit as st
 
-st.title('Sistem Pakar Diagnosis Penyakit Mata')
-
-st.subheader('Pilih Gejala yang Dialami')
-
-# Database Penyakit Mata
-database_penyakit_mata = {
-    "Konjungtivitis": ["mata merah", "keluar lendir", "perih"],
-    "Miopi": ["pandangan kabur", "sulit melihat jauh"],
-    "Hipermetropi": ["sulit melihat dekat", "sakit kepala"],
-    "Glaukoma": ["penglihatan sempit", "sakit mata", "mata merah"],
-    "Katarak": ["penglihatan buram", "sensitivitas cahaya", "berkedip"],
-    "Degenerasi Makula": ["penglihatan pusat kabur", "gangguan warna", "sulit membaca"],
-    "Retinopati Diabetik": ["penglihatan buram", "sering pergantian resep kacamata", "kelopak mata bengkak"],
-    # dan seterusnya
+# Data penyakit dan gejalanya
+penyakit_gejala = {
+  "Konjungtivitis": ["Mata merah","Mata berair","Mata gatal"],
+  "Katarak": ["Penglihatan buram","Silau berlebih","Sering berkedip"],
+  "Glaukoma": ["Penglihatan sempit","Sakit mata","Mata merah","Pusing"],
 }
 
-# Membuat list gejala dari database
-list_gejala = [gejala for penyakit_gejala in database_penyakit_mata.values() for gejala in penyakit_gejala]
+# Fungsi diagnosa
+def diagnosa(gejala):   
 
-# Menggunakan multiselect untuk input gejala
-gejala_terpilih = st.multiselect('Pilih Gejala yang Dialami', list_gejala)
+  hasil = []
+  
+  for penyakit, gejala_penyakit in penyakit_gejala.items():  
+     if set(gejala_penyakit).issubset(set(gejala)):  
+        hasil.append(penyakit)
+        
+  if hasil:
+     return f"Kemungkinan penyakit: {', '.join(hasil)}"
+  else:   
+     return "Tidak dapat mendiagnosis penyakit"
+  
 
-st.write('Gejala yang Dipilih:', ', '.join(gejala_terpilih))
+# Aplikasi      
+st.header("Sistem Pakar Penyakit Mata")
+  
+gejala = st.multiselect("Pilih gejala yang dialami", ["Mata merah","Mata berair","Penglihatan buram","Pusing", "Sakit Mata"])
 
-# Fungsi untuk Logika aturan forward chaining
-def diagnosis_mata(gejala_terpilih):
-    hasil_diagnosis = []
-    
-    for penyakit, gejala_penyakit in database_penyakit_mata.items():
-        if all(gejala in gejala_terpilih for gejala in gejala_penyakit):
-            hasil_diagnosis.append(penyakit)
+if st.button("Diagnosa"):  
 
-    return hasil_diagnosis
-
-# Tombol "Diagnosa"
-if st.button('Diagnosa'):
-    hasil_diagnosis_mata = diagnosis_mata(gejala_terpilih)
-    if hasil_diagnosis_mata:
-        st.write('Penyakit mata yang mungkin: ', ', '.join(hasil_diagnosis_mata))
-    else:
-        st.write('Tidak dapat mendiagnosis penyakit mata.')
+  hasil_diagnosa = diagnosa(gejala)  
+  
+  st.text(hasil_diagnosa)
