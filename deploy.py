@@ -36,6 +36,9 @@ def diagnosis_mata(gejala_terpilih):
 
 # Tombol "Diagnosa"
 if st.button('Diagnosa'):
+    # Periksa nilai gejala_terpilih setelah tombol "Diagnosa" diklik
+    st.write('Nilai gejala_terpilih:', gejala_terpilih)
+    
     hasil_diagnosis_mata = diagnosis_mata(gejala_terpilih)
     st.subheader('Hasil Diagnosis:')
     if hasil_diagnosis_mata:
