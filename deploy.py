@@ -25,11 +25,11 @@ gejala_terpilih = st.multiselect('Pilih Gejala yang Dialami', list_gejala)
 st.write('Gejala yang Dipilih:', ', '.join(gejala_terpilih))
 
 # Logika aturan forward chaining
-def diagnosis_mata(gejala):
+def diagnosis_mata(gejala_terpilih):
     hasil_diagnosis = []
     
     for penyakit, gejala_penyakit in database_penyakit_mata.items():
-        if all(symptom in gejala for symptom in gejala_penyakit):
+        if all(gejala in gejala_terpilih for gejala in gejala_penyakit):
             hasil_diagnosis.append(penyakit)
 
     return hasil_diagnosis
