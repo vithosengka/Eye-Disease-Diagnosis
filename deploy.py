@@ -2,11 +2,11 @@ import streamlit as st
 
 # Definisikan Basis Pengetahuan
 kerusakan = {
-    "Motherboard Rusak": ["Komputer tidak menyala", "Kipas tidak berputar", "Beberapa port USB tidak berfungsi"],
-    "VGA Rusak": ["Layar hitam saat booting", "Artefak/garis pada layar"], 
-    "RAM Rusak": ["BSOD", "Program crash", "Komputer lambat"],
-    "HDD Rusak": ["Boot looping", "Blue screen", "Suara click pada HDD"],  
-    "Overheating": ["Komputer shutdown sendiri", "PC Fans berputar kencang"]  
+    "Motherboard Rusak": ["Komputer tidak menyala", "Kipas tidak berputar","Beberapa port USB tidak bekerja"],
+    "VGA Rusak":["Layar hitam saat booting","Artefak/garis pada layar"], 
+    "RAM Rusak":["BSOD", "Program crash", "Komputer lambat"],
+    "HDD Rusak":["Boot looping","Blue screen", "Suara click pada HDD"],  
+    "Overheating":["Komputer shutdown sendiri","PC Fans berputar kencang"]  
 }
 
 # List semua gejala
@@ -28,9 +28,3 @@ if st.button("Diagnosa"):
         st.write("Rekomendasi: Bawa ke teknisi komputer untuk pengecekan lebih lanjut") 
     else:
         st.write("Maaf, sistem tidak dapat menemukan kerusakan")
-
-# Informasi tambahan
-st.sidebar.header("Informasi Tambahan")
-st.sidebar.subheader("Basis Pengetahuan:")
-for penyebab, gejala in kerusakan.items():
-    st.sidebar.write(f"{penyebab}: {', '.join(gejala)}")
