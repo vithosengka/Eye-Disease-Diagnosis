@@ -26,24 +26,18 @@ st.write('Gejala yang Dipilih:', ', '.join(gejala_terpilih))
 
 # Fungsi untuk Logika aturan forward chaining
 def diagnosis_mata(gejala_terpilih):
+    hasil_diagnosis = []
+    
+    for penyakit, gejala_penyakit in database_penyakit_mata.items():
+        if all(gejala in gejala_terpilih for gejala in gejala_penyakit):
+            hasil_diagnosis.append(penyakit)
 
-  hasil_diagnosis = []
-  
-  for penyakit, gejala_penyakit in database_penyakit_mata.items():
-
-    if all(gejala_penyakit in gejala_terpilih for gejala_penyakit in gejala_penyakit):
-
-      hasil_diagnosis.append(penyakit)
-
-  return hasil_diagnosis
+    return hasil_diagnosis
 
 # Tombol "Diagnosa"
 if st.button('Diagnosa'):
-   hasil_diagnosis_mata = diagnosis_mata(gejala_terpilih)
-
-   if hasil_diagnosis_mata:
-      st.write('Penyakit mata yang mungkin: ', ', '.join(hasil_diagnosis_mata)) 
-   else:
-      st.write('Tidak dapat mendiagnosis penyakit mata.')
-
-
+    hasil_diagnosis_mata = diagnosis_mata(gejala_terpilih)
+    if hasil_diagnosis_mata:
+        st.write('Penyakit mata yang mungkin: ', ', '.join(hasil_diagnosis_mata))
+    else:
+        st.write('Tidak dapat mendiagnosis penyakit mata.')
