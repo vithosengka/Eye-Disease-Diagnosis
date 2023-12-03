@@ -1,41 +1,49 @@
 import streamlit as st
 
-# Database penyakit
-penyakit = {
-    "Konjungtivitis": ["mata_merah","mata_berair","mata_gatal"],
-    "Katarak": ["penglihatan_kabur","silau"],
-    "Glaukoma": ["nyeri_mata","penglihatan_kabur","mata_merah","mual","sakit_kepala"],
-    "Blefaritis": ["mata_merah","kelopak_mata_bengkak","krusta_mata"],
-    "Rabun jauh": ["rabun_jauh","sakit_kepala"]
+st.title('Sistem Pakar Diagnosis Penyakit Mata')
+
+st.subheader('Masukkan Gejala yang Dialami')
+
+gejala = []
+gejala1 = st.text_input('Gejala 1') 
+if gejala1:
+    gejala.append(gejala1)
+    
+gejala2 = st.text_input('Gejala 2')
+if gejala2:
+    gejala.append(gejala2)
+
+gejala3 = st.text_input('Gejala 3')
+if gejala3:
+    gejala.append(gejala3) 
+    
+st.write('Gejala yang Dialami:', ', '.join(gejala))
+
+# Database Penyakit Mata
+database_penyakit_mata = {
+    "Konjungtivitis": ["mata merah", "keluar lendir", "perih"],
+    "Miopi": ["pandangan kabur", "sulit melihat jauh"],
+    "Hipermetropi": ["sulit melihat dekat", "sakit kepala"],
+    "Glaukoma": ["penglihatan sempit", "sakit mata", "mata merah"],
+    "Katarak": ["penglihatan buram", "sensitivitas cahaya", "berkedip"],
+    "Degenerasi Makula": ["penglihatan pusat kabur", "gangguan warna", "sulit membaca"],
+    "Retinopati Diabetik": ["penglihatan buram", "sering pergantian resep kacamata", "kelopak mata bengkak"],
+    # dan seterusnya
 }
 
-rules = []
-for key,value in penyakit.items():
-    for v in value:
-        rules.append([v,key])
+# Logika aturan forward chaining
+def diagnosis(gejala):
+    hasil_diagnosis = []
+    
+    for penyakit, gejala_penyakit in database_penyakit_mata.items():
+        if all(symptom in gejala for symptom in gejala_penyakit):
+            hasil_diagnosis.append(penyakit)
 
-def diagnosis(gejala):  
-    facts = gejala
-    solutions = []
-    target = "penyakit_mata"
+    return hasil_diagnosis
 
-    # Forward chaining code   
-
-    return ", ".join(solutions)
-
-st.title("Sistem Pakar Diagnosis Penyakit Mata")
-gejala = [] 
-
-# Checkbox gejala
-# dst
-
-diagnosis = diagnosis(gejala)  
-st.write("Diagnosis:", diagnosis)
-
-def main():
-    st.title("Sistem Pakar Diagnosis Penyakit Mata")
-    # dst
-
-if __name__ == "__main__":
-    main()
-
+hasil_diagnosis = diagnosis(gejala)
+st.subheader('Hasil Diagnosis:')
+if hasil_diagnosis:
+    st.write('Penyakit mata yang mungkin: ', ', '.join(hasil_diagnosis))
+else:
+    st.write('Tidak dapat mendiagnosis penyakit mata.')
