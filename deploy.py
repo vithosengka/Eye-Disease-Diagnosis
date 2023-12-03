@@ -36,9 +36,11 @@ def diagnosis_mata(gejala_terpilih):
 
 # Tombol "Diagnosa"
 if st.button('Diagnosa'):
-    hasil_diagnosis_mata = diagnosis_mata(gejala_terpilih)
-    st.subheader('Hasil Diagnosis:')
-    if hasil_diagnosis_mata:
-        st.write('Penyakit mata yang mungkin: ', ', '.join(hasil_diagnosis_mata))
-    else:
-        st.write('Tidak dapat mendiagnosis penyakit mata.')
+   hasil_diagnosis_mata = diagnosis_mata(gejala_terpilih)
+
+   if hasil_diagnosis_mata:
+      st.write('Penyakit mata yang mungkin: ', ', '.join(hasil_diagnosis_mata)) 
+   else:
+      st.write('Tidak dapat mendiagnosis penyakit mata.')
+
+
