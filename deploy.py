@@ -32,5 +32,10 @@ gejala = []
 diagnosis = diagnosis(gejala)  
 st.write("Diagnosis:", diagnosis)
 
+def main():
+    st.title("Sistem Pakar Diagnosis Penyakit Mata")
+    # dst
+
 if __name__ == "__main__":
     main()
+
