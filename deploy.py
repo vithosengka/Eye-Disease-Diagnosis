@@ -2,22 +2,7 @@ import streamlit as st
 
 st.title('Sistem Pakar Diagnosis Penyakit Mata')
 
-st.subheader('Masukkan Gejala yang Dialami')
-
-gejala = []
-gejala1 = st.text_input('Gejala 1') 
-if gejala1:
-    gejala.append(gejala1)
-    
-gejala2 = st.text_input('Gejala 2')
-if gejala2:
-    gejala.append(gejala2)
-
-gejala3 = st.text_input('Gejala 3')
-if gejala3:
-    gejala.append(gejala3) 
-    
-st.write('Gejala yang Dialami:', ', '.join(gejala))
+st.subheader('Pilih Gejala yang Dialami')
 
 # Database Penyakit Mata
 database_penyakit_mata = {
@@ -31,8 +16,16 @@ database_penyakit_mata = {
     # dan seterusnya
 }
 
+# Membuat list gejala dari database
+list_gejala = [gejala for penyakit_gejala in database_penyakit_mata.values() for gejala in penyakit_gejala]
+
+# Menggunakan multiselect untuk input gejala
+gejala_terpilih = st.multiselect('Pilih Gejala yang Dialami', list_gejala)
+
+st.write('Gejala yang Dipilih:', ', '.join(gejala_terpilih))
+
 # Logika aturan forward chaining
-def diagnosis(gejala):
+def diagnosis_mata(gejala):
     hasil_diagnosis = []
     
     for penyakit, gejala_penyakit in database_penyakit_mata.items():
@@ -41,9 +34,9 @@ def diagnosis(gejala):
 
     return hasil_diagnosis
 
-hasil_diagnosis = diagnosis(gejala)
+hasil_diagnosis_mata = diagnosis_mata(gejala_terpilih)
 st.subheader('Hasil Diagnosis:')
-if hasil_diagnosis:
-    st.write('Penyakit mata yang mungkin: ', ', '.join(hasil_diagnosis))
+if hasil_diagnosis_mata:
+    st.write('Penyakit mata yang mungkin: ', ', '.join(hasil_diagnosis_mata))
 else:
     st.write('Tidak dapat mendiagnosis penyakit mata.')
