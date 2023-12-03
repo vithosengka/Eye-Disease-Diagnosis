@@ -1,34 +1,36 @@
 import streamlit as st
 
-# Data penyakit dan gejalanya
-penyakit_gejala = {
-  "Konjungtivitis": ["Mata merah","Mata berair","Mata gatal"],
-  "Katarak": ["Penglihatan buram","Silau berlebih","Sering berkedip"],
-  "Glaukoma": ["Penglihatan sempit","Sakit mata","Mata merah","Pusing"],
+# Definisikan Basis Pengetahuan
+kerusakan = {
+    "Motherboard Rusak": ["Komputer tidak menyala", "Kipas tidak berputar", "Beberapa port USB tidak berfungsi"],
+    "VGA Rusak": ["Layar hitam saat booting", "Artefak/garis pada layar"], 
+    "RAM Rusak": ["BSOD", "Program crash", "Komputer lambat"],
+    "HDD Rusak": ["Boot looping", "Blue screen", "Suara click pada HDD"],  
+    "Overheating": ["Komputer shutdown sendiri", "PC Fans berputar kencang"]  
 }
 
-# Fungsi diagnosa
-def diagnosa(gejala):   
+# List semua gejala
+semua_gejala = [gejala for penyebab in kerusakan.values() for gejala in penyebab]
 
-  hasil = []
-  
-  for penyakit, gejala_penyakit in penyakit_gejala.items():  
-     if set(gejala_penyakit).issubset(set(gejala)):  
-        hasil.append(penyakit)
-        
-  if hasil:
-     return f"Kemungkinan penyakit: {', '.join(hasil)}"
-  else:   
-     return "Tidak dapat mendiagnosis penyakit"
-  
+st.header("Sistem Pakar Diagnosis Kerusakan Komputer")
+selected = st.multiselect("Pilih gejala yang dialami", semua_gejala)
 
-# Aplikasi      
-st.header("Sistem Pakar Penyakit Mata")
-  
-gejala = st.multiselect("Pilih gejala yang dialami", ["Mata merah","Mata berair","Penglihatan buram","Pusing", "Sakit Mata"])
+if st.button("Diagnosa"):   
+    hasil_diagnosa = []
+    
+    for penyebab, gejala in kerusakan.items():
+        if all(g in selected for g in gejala):
+            hasil_diagnosa.append(penyebab)
 
-if st.button("Diagnosa"):  
+    if hasil_diagnosa:
+        st.subheader("Hasil Diagnosa")
+        st.write(f"Kemungkinan Kerusakan: {', '.join(hasil_diagnosa)}")
+        st.write("Rekomendasi: Bawa ke teknisi komputer untuk pengecekan lebih lanjut") 
+    else:
+        st.write("Maaf, sistem tidak dapat menemukan kerusakan")
 
-  hasil_diagnosa = diagnosa(gejala)  
-  
-  st.text(hasil_diagnosa)
+# Informasi tambahan
+st.sidebar.header("Informasi Tambahan")
+st.sidebar.subheader("Basis Pengetahuan:")
+for penyebab, gejala in kerusakan.items():
+    st.sidebar.write(f"{penyebab}: {', '.join(gejala)}")
