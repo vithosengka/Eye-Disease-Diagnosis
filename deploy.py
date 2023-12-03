@@ -29,8 +29,8 @@ def diagnosis_mata(gejala_terpilih):
     hasil_diagnosis = []
     
     for penyakit, gejala_penyakit in database_penyakit_mata.items():
-        if all(gejala in gejala_terpilih for gejala in gejala_penyakit):
-            hasil_diagnosis.append(penyakit)
+        if all(gejala_penyakit in gejala_terpilih for gejala_penyakit in gejala):
+           hasil_diagnosis.append(penyakit)
 
     return hasil_diagnosis
 
