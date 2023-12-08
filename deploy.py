@@ -1,3 +1,6 @@
+Baik, berikut ini adalah keseluruhan kode sistem pakar diagnosis kerusakan PC setelah perbaikan:
+
+```python
 import streamlit as st
 
 st.set_page_config(page_title="Sistem Pakar Diagnosis PC")
@@ -5,7 +8,7 @@ st.header("Sistem Pakar Diagnosis Kerusakan Komputer")
 
 kerusakan = {
     "Motherboard Rusak": ["Komputer tidak menyala", "Kipas tidak berputar","Beberapa port USB tidak bekerja"],
-    "VGA Rusak": ["Layar hitam saat booting","Artefak/garis pada layar"],
+    "VGA Rusak": ["Layar hitam saat booting","Artefak/garis pada layar"], 
     "RAM Rusak": ["BSOD", "Program crash", "Komputer lambat"],
     "HDD Rusak": ["Boot looping","Blue screen", "Suara click pada HDD"],
     "Overheating": ["Komputer shutdown sendiri","PC Fans berputar kencang"],
@@ -15,53 +18,55 @@ kerusakan = {
 }
 
 rekomendasi = {
-    "Motherboard Rusak": "Ganti motherboard dengan yang baru atau bawa ke service center",
-    "VGA Rusak": "Ganti VGA dengan yang baru, atau bersihkan VGA dari debu",
-    "RAM Rusak": "Ganti RAM dengan yang baru, pastikan kapasitas dan jenis RAM cocok",
-    "HDD Rusak": "Ganti HDD dengan SSD, atau clone data ke HDD baru",
-    "Overheating": "Bersihkan debu pada CPU fan, heatsink, dan case PC, aplikasikan thermal paste baru pada CPU",
-    "Power Supply Rusak": "Ganti power supply yang baru dengan daya sesuai kebutuhan",
-    "Processor Rusak": "Ganti processor dengan yang baru, atau bawa ke service center",
-    "Sound Card Rusak": "Ganti sound card USB/PCI, atau gunakan headphone/speaker USB"   
+    "Motherboard Rusak": "Ganti motherboard atau bawa ke service center",
+    "VGA Rusak": "Ganti VGA atau bersihkan dari debu", 
+    "RAM Rusak": "Ganti RAM dengan yang baru, cocokkan spesifikasinya",
+    "HDD Rusak": "Ganti HDD atau clone ulang data ke HDD baru",
+    "Overheating": "Bersihkan CPU fan, heatsink, aplikasikan thermal paste pada CPU",
+    "Power Supply Rusak": "Ganti power supply dengan yang baru dan sesuai kebutuhan",
+    "Processor Rusak": "Ganti processor atau bawa ke service center",
+    "Sound Card Rusak": "Ganti sound card USB/PCI, gunakan headphone/speaker USB"  
 }
 
-# Aturan asosiasi
 asosiasi_gejala = {
-    "BSOD": ["Program crash", "Komputer lambat"],
-    "Suara klik HDD": ["Boot looping","Blue screen"]  
+   "BSOD": ["Program crash", "Komputer lambat"],  
+   "Suara klik HDD": ["Boot looping","Blue screen"]
 }
-
-# Urutan prioritas gejala
+    
 urutan_gejala = ["Komputer tidak menyala", "Layar hitam", "BSOD", "Program crash", "Boot looping", "Suara klik HDD"]
 
-# Fungsi hitung certainty factor
-def hitung_cf(jumlah_gejala, jumlah_cocok): 
-    if jumlah_cocok == 0:
+def hitung_cf(jumlah_gejala, jumlah_cocok):
+    if jumlah_cocok == 0 or jumlah_gejala == 0:
         return 0
     return jumlah_cocok / jumlah_gejala
 
-# Kode Utama
 semua_gejala = [gejala for gejala_list in kerusakan.values() for gejala in gejala_list]  
 
 pilihan_gejala = st.multiselect("Pilih gejala yang dialami:", semua_gejala)   
 
 if st.button("Diagnosis Kerusakan"):
       
-    diagnosis = []
+    ambang_cf = 0.3
+    diagnosa_ditemukan = False
     
     for penyebab, gejala in kerusakan.items():
-        jumlah_cocok = len(set(gejala) & set(pilihan_gejala))
-        cf = hitung_cf(len(gejala), jumlah_cocok)  
-        if (cf >= 0.6):
-            diagnosis.append(penyebab)
-            
-    if diagnosis:
-        diagnosis = sorted(diagnosis, key=lambda x: hitung_cf(len(kerusakan[x]), len(set(kerusakan[x]) & set(pilihan_gejala))), reverse=True)[0]
-        st.write(f"Kemungkinan kerusakan: {diagnosis}") 
-        st.write(f"Rekomendasi perbaikan: {rekomendasi[diagnosis]}")
-    else:
-        st.write("Maaf, tidak ditemukan kerusakan")
-        
+        if set(pilihan_gejala) & set(gejala):
+            jumlah_cocok = len(set(gejala) & set(pilihan_gejala))
+            cf = hitung_cf(len(gejala), jumlah_cocok)
+            if (cf >= ambang_cf):
+                diagnosa_ditemukan = True
+                st.write(f"Kemungkinan kerusakan: {penyebab}")
+                st.write(f"Rekomendasi perbaikan: {rekomendasi[penyebab]}") 
+               
+    if not diagnosa_ditemukan:
+       if set(pilihan_gejala) - set(semua_gejala):
+          st.write("Maaf, beberapa gejala yang Anda pilih tidak dikenali oleh sistem")  
+       else:
+          st.write("Maaf, tidak ditemukan kerusakan")
+              
 st.write("---")
-st.subheader("Tentang Aplikasi")
+st.subheader("Tentang Aplikasi") 
 st.write("Aplikasi sistem pakar diagnosis kerusakan komputer ini dibuat oleh Claude dengan bahasa pemrograman Python dan framework Streamlit.")
+```
+
+Mohon dicek kembali apakah ada yang perlu diperbaiki atau ditambahkan. Terima kasih banyak.
