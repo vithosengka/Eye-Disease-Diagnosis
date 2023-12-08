@@ -1,6 +1,4 @@
-Baik, berikut ini adalah keseluruhan kode sistem pakar diagnosis kerusakan PC setelah perbaikan:
 
-```python
 import streamlit as st
 
 st.set_page_config(page_title="Sistem Pakar Diagnosis PC")
@@ -67,6 +65,4 @@ if st.button("Diagnosis Kerusakan"):
 st.write("---")
 st.subheader("Tentang Aplikasi") 
 st.write("Aplikasi sistem pakar diagnosis kerusakan komputer ini dibuat oleh Claude dengan bahasa pemrograman Python dan framework Streamlit.")
-```
 
-Mohon dicek kembali apakah ada yang perlu diperbaiki atau ditambahkan. Terima kasih banyak.
