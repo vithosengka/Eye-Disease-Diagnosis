@@ -28,9 +28,10 @@ rekomendasi = {
 urutan_gejala = ["Komputer tidak menyala", "Layar hitam", "BSOD", "Program crash", "Boot looping", "Suara klik HDD"]  
 
 def hitung_cf(jumlah_gejala, jumlah_cocok):
-    if jumlah_cocok == 0 or jumlah_gejala == 0:
+    if jumlah_cocok == 0:
         return 0
-    return jumlah_cocok / jumlah_gejala
+
+    return jumlah_cocok / len(pilihan_gejala)
 
 semua_gejala = [gejala for gejala_list in kerusakan.values() for gejala in gejala_list]  
 
