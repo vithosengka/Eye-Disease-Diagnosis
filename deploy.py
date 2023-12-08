@@ -57,4 +57,4 @@ if st.button("Diagnosis Kerusakan"):
               
 st.write("---")
 st.subheader("Tentang Aplikasi")
-st.write("Aplikasi sistem pakar diagnosis kerusakan komputer ini dibuat oleh Claude dengan bahasa pemrograman Python dan framework Streamlit.")
+st.write("Aplikasi sistem pakar diagnosis kerusakan komputer dengan bahasa pemrograman Python dan framework Streamlit.")
