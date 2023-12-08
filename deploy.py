@@ -31,7 +31,7 @@ def hitung_cf(jumlah_gejala, jumlah_cocok):
     if jumlah_cocok == 0:
         return 0
 
-    return jumlah_cocok / len(pilihan_gejala)
+    return jumlah_cocok / len(urutan_gejala)
 
 semua_gejala = [gejala for gejala_list in kerusakan.values() for gejala in gejala_list]  
 
