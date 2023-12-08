@@ -1,4 +1,3 @@
-
 import streamlit as st
 
 st.set_page_config(page_title="Sistem Pakar Diagnosis PC")
@@ -25,13 +24,8 @@ rekomendasi = {
     "Processor Rusak": "Ganti processor atau bawa ke service center",
     "Sound Card Rusak": "Ganti sound card USB/PCI, gunakan headphone/speaker USB"  
 }
-
-asosiasi_gejala = {
-   "BSOD": ["Program crash", "Komputer lambat"],  
-   "Suara klik HDD": ["Boot looping","Blue screen"]
-}
     
-urutan_gejala = ["Komputer tidak menyala", "Layar hitam", "BSOD", "Program crash", "Boot looping", "Suara klik HDD"]
+urutan_gejala = ["Komputer tidak menyala", "Layar hitam", "BSOD", "Program crash", "Boot looping", "Suara klik HDD"]  
 
 def hitung_cf(jumlah_gejala, jumlah_cocok):
     if jumlah_cocok == 0 or jumlah_gejala == 0:
@@ -48,21 +42,18 @@ if st.button("Diagnosis Kerusakan"):
     diagnosa_ditemukan = False
     
     for penyebab, gejala in kerusakan.items():
-        if set(pilihan_gejala) & set(gejala):
-            jumlah_cocok = len(set(gejala) & set(pilihan_gejala))
-            cf = hitung_cf(len(gejala), jumlah_cocok)
-            if (cf >= ambang_cf):
-                diagnosa_ditemukan = True
-                st.write(f"Kemungkinan kerusakan: {penyebab}")
-                st.write(f"Rekomendasi perbaikan: {rekomendasi[penyebab]}") 
+        cf = hitung_cf(len(gejala), len(set(gejala) & set(pilihan_gejala)))
+        if (cf >= ambang_cf):
+            diagnosa_ditemukan = True
+            st.write(f"Kemungkinan kerusakan: {penyebab}")
+            st.write(f"Rekomendasi perbaikan: {rekomendasi[penyebab]}")
                
     if not diagnosa_ditemukan:
        if set(pilihan_gejala) - set(semua_gejala):
-          st.write("Maaf, beberapa gejala yang Anda pilih tidak dikenali oleh sistem")  
+          st.write("Maaf, beberapa gejala yang Anda pilih tidak dikenali oleh sistem") 
        else:
           st.write("Maaf, tidak ditemukan kerusakan")
               
 st.write("---")
-st.subheader("Tentang Aplikasi") 
+st.subheader("Tentang Aplikasi")
 st.write("Aplikasi sistem pakar diagnosis kerusakan komputer ini dibuat oleh Claude dengan bahasa pemrograman Python dan framework Streamlit.")
-
