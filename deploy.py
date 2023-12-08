@@ -1,7 +1,5 @@
 import streamlit as st
 
-import streamlit as st
-
 kerusakan = {
     "Motherboard Rusak": ["Komputer tidak menyala", "Kipas tidak berputar","Beberapa port USB tidak bekerja"],
     "VGA Rusak": ["Layar hitam saat booting","Artefak/garis pada layar"],
