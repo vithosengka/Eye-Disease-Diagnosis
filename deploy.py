@@ -49,13 +49,24 @@ if st.button("Diagnosis Kerusakan"):
     jenis_kerusakan = ""
     rekomendasi_perbaikan = ""
 
-    for penyebab, gejala in kerusakan.items():
-        cf = hitung_cf(len(gejala), len(set(gejala) & set(pilihan_gejala)))
-        if cf >= ambang_cf:
+    # Prioritas kepada gejala kerusakan "Motherboard Rusak"
+    gejala_motherboard = kerusakan["Motherboard Rusak"]
+    cf_motherboard = hitung_cf(len(gejala_motherboard), len(set(gejala_motherboard) & set(pilihan_gejala)))
+
+    if cf_motherboard >= ambang_cf:
+        diagnosa_ditemukan = True
+        jenis_kerusakan = "Motherboard Rusak"
+        rekomendasi_perbaikan = rekomendasi["Motherboard Rusak"]
+
+    # Jika tidak ada diagnosa untuk motherboard, coba kerusakan "Power Supply Rusak"
+    if not diagnosa_ditemukan:
+        gejala_power_supply = kerusakan["Power Supply Rusak"]
+        cf_power_supply = hitung_cf(len(gejala_power_supply), len(set(gejala_power_supply) & set(pilihan_gejala)))
+
+        if cf_power_supply >= ambang_cf:
             diagnosa_ditemukan = True
-            jenis_kerusakan = penyebab
-            rekomendasi_perbaikan = rekomendasi[penyebab]
-            break
+            jenis_kerusakan = "Power Supply Rusak"
+            rekomendasi_perbaikan = rekomendasi["Power Supply Rusak"]
 
     if diagnosa_ditemukan:
         # Tampilkan profil pengguna dan hasil diagnosis
@@ -76,7 +87,4 @@ if st.button("Diagnosis Kerusakan"):
         else:
             st.write("Maaf, tidak ditemukan kerusakan")
 
-st.write("---")
-st.subheader("Javier Jean Vito Sengka")
-st.subheader("Tentang Aplikasi")
-st.write("Aplikasi sistem pakar diagnosis kerusakan komputer dengan bahasa pemrograman Python dan framework Streamlit.")
+# ...
