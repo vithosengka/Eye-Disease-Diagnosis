@@ -46,26 +46,35 @@ if st.button("Diagnosis Kerusakan"):
 
     ambang_cf = 0.3
     diagnosa_ditemukan = False
+    jenis_kerusakan = ""
+    rekomendasi_perbaikan = ""
 
     for penyebab, gejala in kerusakan.items():
         cf = hitung_cf(len(gejala), len(set(gejala) & set(pilihan_gejala)))
-        if (cf >= ambang_cf):
+        if cf >= ambang_cf:
             diagnosa_ditemukan = True
-            st.write(f"Kemungkinan kerusakan: {penyebab}")
-            st.write(f"Rekomendasi perbaikan: {rekomendasi[penyebab]}")
+            jenis_kerusakan = penyebab
+            rekomendasi_perbaikan = rekomendasi[penyebab]
+            break
 
-    if not diagnosa_ditemukan:
+    if diagnosa_ditemukan:
+        # Tampilkan profil pengguna dan hasil diagnosis
+        st.write("---")
+        st.subheader("Profil Pengguna:")
+        st.write(f"Nama: {nama}")
+        st.write(f"Alamat: {alamat}")
+        st.write(f"Nomor HP: {nomor_hp}")
+
+        st.write("---")
+        st.subheader("Hasil Diagnosis:")
+        st.write(f"Jenis Kerusakan: {jenis_kerusakan}")
+        st.write(f"Rekomendasi Perbaikan: {rekomendasi_perbaikan}")
+
+    else:
         if set(pilihan_gejala) - set(semua_gejala):
             st.write("Maaf, beberapa gejala yang Anda pilih tidak dikenali oleh sistem")
         else:
             st.write("Maaf, tidak ditemukan kerusakan")
-
-# Tampilkan profil pengguna
-st.write("---")
-st.subheader("Profil Pengguna:")
-st.write(f"Nama: {nama}")
-st.write(f"Alamat: {alamat}")
-st.write(f"Nomor HP: {nomor_hp}")
 
 st.write("---")
 st.subheader("Javier Jean Vito Sengka")
