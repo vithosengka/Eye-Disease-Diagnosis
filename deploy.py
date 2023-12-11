@@ -42,33 +42,34 @@ nomor_hp = st.text_input("Nomor HP:")
 semua_gejala = [gejala for gejala_list in kerusakan.values() for gejala in gejala_list]
 pilihan_gejala = st.multiselect("Pilih gejala yang dialami:", semua_gejala)
 
-# Perhitungan Certainty Factor (CF) dan Prioritas Kerusakan
-ambang_cf = 0.3
-diagnosa_ditemukan = False
-jenis_kerusakan = ""
-rekomendasi_perbaikan = ""
+# Tombol Diagnosis
+if st.button("Diagnosis Kerusakan"):
+    ambang_cf = 0.3
+    diagnosa_ditemukan = False
+    jenis_kerusakan = ""
+    rekomendasi_perbaikan = ""
 
-for penyebab, gejala in kerusakan.items():
-    cf = hitung_cf(len(gejala), len(set(gejala) & set(pilihan_gejala)))
-    if cf >= ambang_cf and cf > diagnosa_ditemukan:
-        diagnosa_ditemukan = cf
-        jenis_kerusakan = penyebab
-        rekomendasi_perbaikan = rekomendasi[penyebab]
+    for penyebab, gejala in kerusakan.items():
+        cf = hitung_cf(len(gejala), len(set(gejala) & set(pilihan_gejala)))
+        if cf >= ambang_cf and cf > diagnosa_ditemukan:
+            diagnosa_ditemukan = cf
+            jenis_kerusakan = penyebab
+            rekomendasi_perbaikan = rekomendasi[penyebab]
 
-# Hasil Diagnosis dan Rekomendasi
-if diagnosa_ditemukan:
-    st.write("---")
-    st.subheader("Profil Pengguna:")
-    st.write(f"Nama: {nama}")
-    st.write(f"Alamat: {alamat}")
-    st.write(f"Nomor HP: {nomor_hp}")
+    # Hasil Diagnosis dan Rekomendasi
+    if diagnosa_ditemukan:
+        st.write("---")
+        st.subheader("Profil Pengguna:")
+        st.write(f"Nama: {nama}")
+        st.write(f"Alamat: {alamat}")
+        st.write(f"Nomor HP: {nomor_hp}")
 
-    st.write("---")
-    st.subheader("Hasil Diagnosis:")
-    st.write(f"Jenis Kerusakan: {jenis_kerusakan}")
-    st.write(f"Rekomendasi Perbaikan: {rekomendasi_perbaikan}")
-else:
-    if set(pilihan_gejala) - set(semua_gejala):
-        st.write("Maaf, beberapa gejala yang Anda pilih tidak dikenali oleh sistem")
+        st.write("---")
+        st.subheader("Hasil Diagnosis:")
+        st.write(f"Jenis Kerusakan: {jenis_kerusakan}")
+        st.write(f"Rekomendasi Perbaikan: {rekomendasi_perbaikan}")
     else:
-        st.write("Maaf, tidak ditemukan kerusakan")
+        if set(pilihan_gejala) - set(semua_gejala):
+            st.write("Maaf, beberapa gejala yang Anda pilih tidak dikenali oleh sistem")
+        else:
+            st.write("Maaf, tidak ditemukan kerusakan")
