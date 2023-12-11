@@ -56,5 +56,6 @@ if st.button("Diagnosis Kerusakan"):
           st.write("Maaf, tidak ditemukan kerusakan")
               
 st.write("---")
+st.subheader("Javier Jean Vito Sengka")
 st.subheader("Tentang Aplikasi")
 st.write("Aplikasi sistem pakar diagnosis kerusakan komputer dengan bahasa pemrograman Python dan framework Streamlit.")
