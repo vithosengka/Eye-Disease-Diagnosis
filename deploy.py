@@ -82,8 +82,16 @@ def get_diagnosa(kemungkinan, diagnosa):
     index_tertinggi = kemungkinan.index(max(kemungkinan))
     return diagnosa[index_tertinggi], rekomendasi_perbaikan[index_tertinggi]
 
-# Tampilkan checkbox untuk gejala
-selected_gejala = st.multiselect("Pilih gejala yang dialami:", gejala)
+# Tampilkan judul dan deskripsi
+st.title("Sistem Diagnosis Kerusakan Komputer")
+st.write("Pilih gejala yang dialami oleh komputer Anda, dan kami akan mencoba mendiagnosis kerusakan serta memberikan rekomendasi perbaikan.")
+
+# Tampilkan checkbox untuk gejala dengan deskripsi
+selected_gejala = st.multiselect(
+    "Pilih gejala yang dialami:",
+    gejala,
+    help="Pilih gejala yang Anda alami pada komputer. Anda dapat memilih lebih dari satu gejala."
+)
 
 # Tampilkan tombol untuk diagnosis
 if st.button("Diagnosis Kerusakan"):
