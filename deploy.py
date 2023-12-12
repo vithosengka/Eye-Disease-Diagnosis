@@ -86,17 +86,13 @@ def get_diagnosa(kemungkinan, diagnosa):
 st.title("Sistem Diagnosis Kerusakan Komputer")
 st.write("Pilih gejala yang dialami oleh komputer Anda, dan kami akan mencoba mendiagnosis kerusakan serta memberikan rekomendasi perbaikan.")
 
-# Tampilkan checkbox untuk gejala dengan deskripsi
-selected_gejala = st.multiselect(
-    "Pilih gejala yang dialami:",
-    gejala,
-    help="Pilih gejala yang Anda alami pada komputer. Anda dapat memilih lebih dari satu gejala."
-)
+# Tampilkan Dropdown Menu untuk pemilihan gejala
+selected_gejala = st.selectbox("Pilih gejala yang dialami:", gejala, help="Pilih gejala yang Anda alami pada komputer.")
 
 # Tampilkan tombol untuk diagnosis
 if st.button("Diagnosis Kerusakan"):
     # Hitung kemungkinan kerusakan
-    kemungkinan_kerusakan = hitung_kemungkinan(selected_gejala, bobot_gejala)
+    kemungkinan_kerusakan = hitung_kemungkinan([selected_gejala], bobot_gejala)
 
     # Dapatkan diagnosa
     hasil_diagnosa, rekomendasi = get_diagnosa(kemungkinan_kerusakan, diagnosa)
@@ -114,5 +110,5 @@ if st.button("Diagnosis Kerusakan"):
     # Tampilkan tabel dengan kemungkinan kerusakan untuk setiap gejala
     st.write("---")
     st.subheader("Kemungkinan Kerusakan Berdasarkan Gejala:")
-    table_data = {"Gejala": gejala, "Kemungkinan": kemungkinan_kerusakan}
+    table_data = {"Gejala": [selected_gejala], "Kemungkinan": kemungkinan_kerusakan}
     st.table(table_data)
