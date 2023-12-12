@@ -47,7 +47,7 @@ if st.button("Diagnosis Kerusakan"):
     # Iterasi melalui setiap jenis kerusakan
     for jenis, gejala in kerusakan.items():
         cf = len(set(gejala) & set(pilihan_gejala)) / len(pilihan_gejala)
-        if cf >= 0.3:  # Ambang CF
+        if cf >= 0.2:  # Ambang CF
             diagnosa_ditemukan = True
             jenis_kerusakan = jenis
             rekomendasi_perbaikan = rekomendasi[jenis]
